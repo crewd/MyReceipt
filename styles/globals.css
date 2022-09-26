@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans;
+    @apply text-regular;
+    @apply text-gray-900;
+    @apply overflow-y-scroll;
+    @apply bg-white;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
