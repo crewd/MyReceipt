@@ -5,7 +5,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <h1 className="font-bold text-xxl">MyReceipt</h1>
         <p className="flex justify-end w-full text-gray-500">닉네임 님</p>
       </header>
-      <main className="py-[20px]">{children}</main>
+      <main>{children}</main>
     </div>
   );
 };
