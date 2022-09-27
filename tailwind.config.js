@@ -6,6 +6,11 @@ module.exports = {
       fontFamily: {
         sans: ['Noto Sans KR', 'sans-serif'],
       },
+      colors: {
+        primary: '#FFBF60',
+        plus: '#13DE7C',
+        minus: '#F13B3B',
+      },
       fontSize: {
         regular: '16px',
         max: '40px',

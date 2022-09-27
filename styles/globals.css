@@ -8,7 +8,7 @@
     @apply text-regular;
     @apply text-gray-900;
     @apply overflow-y-scroll;
-    @apply bg-white;
+    @apply bg-primary;
     -webkit-tap-highlight-color: transparent;
   }
 }
