@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
-import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import BreakDownCard from '../components/common/BreakDownCard';
 import { assetState } from '../utils/recoils/asset';
@@ -46,7 +47,6 @@ const MainPage = ({ data }: { data: Data }) => {
 
   const inputNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    // value의 값이 숫자가 아닐경우 빈문자열로 replace 해버림.
     const onlyNumber = value.replace(/[^0-9]/g, '');
     setBasicFunds(Number(onlyNumber));
   };
@@ -72,7 +72,7 @@ const MainPage = ({ data }: { data: Data }) => {
       </nav>
       <div>
         <button className="w-full" onClick={() => setMenuOpened(!menuOpened)}>
-          <BreakDownCard title="기초자금" price={asset.basicFunds} />
+          <BreakDownCard title="기초 자금" price={asset.basicFunds} />
         </button>
         {menuOpened && (
           <div className="p-[20px] flex justify-between bg-gray-100/80">
@@ -100,10 +100,15 @@ const MainPage = ({ data }: { data: Data }) => {
             price={consumption.price}
           />
         ))}
+        <div className="p-[10px] text-md text-center hover:bg-gray-100/80">
+          <Link href="/">
+            <a>내역 추가</a>
+          </Link>
+        </div>
       </div>
       <div className="px-[20px] py-[40px] border-double border-t-4 border-gray-500 flex justify-between">
         <h2 className="text-lg font-bold">잔액</h2>
-        <div className={`text-lg font-bold`}>{priceCalc().toLocaleString()}</div>
+        <h2 className={`text-lg font-bold`}>{priceCalc().toLocaleString()}</h2>
       </div>
     </div>
   );
