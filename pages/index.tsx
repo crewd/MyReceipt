@@ -48,8 +48,7 @@ const MainPage = ({ data }: { data: Data }) => {
 
   const inputNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    const onlyNumber = value.replace(/[^0-9]/g, '');
-    setBasicFunds(Number(onlyNumber));
+    setBasicFunds(Number(value));
   };
 
   const changeBasicFunds = () => {
@@ -77,15 +76,15 @@ const MainPage = ({ data }: { data: Data }) => {
           <BreakDownCard title="기초 자금" price={asset.basicFunds} />
         </button>
         {menuOpened && (
-          <div className="p-[20px] flex justify-between bg-gray-100/80">
+          <div className="p-[20px] sm:flex justify-between bg-gray-100/80">
             <input
-              className="px-[10px] py-[5px] text-regular border border-gray-300 rounded-md outline-none"
-              type="text"
-              value={basicFunds || ''}
+              className="px-[10px] sm:w-[300px] w-full py-[5px] text-regular border border-gray-300 rounded-md outline-none"
+              type="number"
+              value={basicFunds}
               placeholder="기초 자금 변경"
               onChange={inputNumber}
             />
-            <div className="flex">
+            <div className="flex justify-end sm:justify-start sm:p-0 p-[10px]">
               <button onClick={changeBasicFunds}>수정</button>
               <button className="ml-[15px]" onClick={() => setMenuOpened(false)}>
                 취소
@@ -102,7 +101,7 @@ const MainPage = ({ data }: { data: Data }) => {
             price={consumption.price}
           />
         ))}
-        <Link href="/">
+        <Link href="/write">
           <a>
             <div className="p-[10px] text-md text-center hover:bg-gray-100/80 w-full">내역 추가 </div>
           </a>

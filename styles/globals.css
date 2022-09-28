@@ -10,5 +10,15 @@
     @apply overflow-y-scroll;
     @apply bg-primary;
     -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: none;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  /* Firefox */
+  input[type='number'] {
+    -moz-appearance: textfield;
   }
 }
