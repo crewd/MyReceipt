@@ -26,6 +26,7 @@ const MainPage = ({ data }: { data: Data }) => {
     if (data) {
       setAsset(data);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -60,8 +61,9 @@ const MainPage = ({ data }: { data: Data }) => {
 
   useEffect(() => {
     if (!menuOpened) {
-      setBasicFunds(asset.basicFunds);
+      return setBasicFunds(asset.basicFunds);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuOpened]);
 
   return (
@@ -100,11 +102,11 @@ const MainPage = ({ data }: { data: Data }) => {
             price={consumption.price}
           />
         ))}
-        <div className="p-[10px] text-md text-center hover:bg-gray-100/80">
-          <Link href="/">
-            <a>내역 추가</a>
-          </Link>
-        </div>
+        <Link href="/">
+          <a>
+            <div className="p-[10px] text-md text-center hover:bg-gray-100/80 w-full">내역 추가 </div>
+          </a>
+        </Link>
       </div>
       <div className="px-[20px] py-[40px] border-double border-t-4 border-gray-500 flex justify-between">
         <h2 className="text-lg font-bold">잔액</h2>
