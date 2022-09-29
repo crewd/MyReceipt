@@ -180,8 +180,8 @@ const WritePage = () => {
         </div>
       </div>
       {contents.length > 0 && (
-        <div className="py-[20px] border-gray-400 border-double border-y-4">
-          <nav className="flex justify-between text-md pb-[10px] px-[20px] border-b border-gray-400">
+        <div className="border-gray-400 border-double border-y-4">
+          <nav className="flex justify-between text-md py-[10px] px-[20px] border-b border-gray-400">
             <div>메뉴</div>
             <div>가격</div>
             <div>삭제</div>
