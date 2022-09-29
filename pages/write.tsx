@@ -1,24 +1,20 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
 import BreakDownCard from '../components/common/BreakDownCard';
-import { assetState } from '../utils/recoils/asset';
 
 type Content = {
-  detailTitle: string;
+  subTitle: string;
   price: number | string;
   id: number;
 };
 
 const WritePage = () => {
-  const [asset, setAsset] = useRecoilState(assetState);
-
   const [mainTitle, setMainTitle] = useState('');
   const [date, setDate] = useState({ year: '', month: '', day: '' });
   const { year, month, day } = date;
 
   const [contents, setContents] = useState<Content[]>([]);
-  const [content, setContent] = useState<Content>({ detailTitle: '', price: '', id: 0 });
-  const { detailTitle, price } = content;
+  const [content, setContent] = useState<Content>({ subTitle: '', price: '', id: 0 });
+  const { subTitle, price } = content;
 
   const [income, setIncome] = useState(true);
   const [expenditure, setExpenditure] = useState(false);
@@ -56,26 +52,38 @@ const WritePage = () => {
   };
 
   const addContent = () => {
-    if (!detailTitle || !price) {
+    if (!subTitle || !price) {
       return;
     }
     if (expenditure) {
-      setContents([...contents, { detailTitle: content.detailTitle, price: -content.price, id: idCount }]);
+      setContents([...contents, { subTitle: content.subTitle, price: -content.price, id: idCount }]);
     }
     if (income) {
-      setContents([...contents, { detailTitle: content.detailTitle, price: content.price, id: idCount }]);
+      setContents([...contents, { subTitle: content.subTitle, price: content.price, id: idCount }]);
     }
     setIdCount(idCount + 1);
   };
 
   useEffect(() => {
     if (contents) {
-      setContent({ detailTitle: '', price: '', id: 0 });
+      setContent({ subTitle: '', price: '', id: 0 });
     }
   }, [contents]);
 
   const deleteContent = (id: number) => {
     setContents(contents.filter((data) => data.id !== id));
+  };
+
+  const submitData = () => {
+    if (!mainTitle || !date || !contents) {
+      return;
+    }
+    const data = {
+      title: mainTitle,
+      date: date,
+      consumption: contents,
+    };
+    console.log(data);
   };
 
   return (
@@ -146,10 +154,10 @@ const WritePage = () => {
         <div className="py-[20px] sm:flex sm:justify-between">
           <h3 className="text-md pb-[10px]">세부 항목</h3>
           <input
-            name="detailTitle"
+            name="subTitle"
             className="px-[10px] py-[5px] sm:w-[300px] w-full text-regular border border-gray-300 rounded-md outline-none"
             type="text"
-            value={detailTitle}
+            value={subTitle}
             placeholder="세부 항목 명"
             onChange={onChangeHandler}
           />
@@ -182,7 +190,7 @@ const WritePage = () => {
             return (
               <div key={content.id}>
                 <BreakDownCard
-                  title={content.detailTitle}
+                  title={content.subTitle}
                   price={Number(content.price)}
                   deleteContent={() => deleteContent(content.id)}
                 />
@@ -192,7 +200,11 @@ const WritePage = () => {
         </div>
       )}
       <div className="my-[20px] flex justify-between">
-        <button className="w-full p-[10px] shadow-md rounded-md border hover:bg-primary hover:text-white">확인</button>
+        <button
+          className="w-full p-[10px] shadow-md rounded-md border hover:bg-primary hover:text-white"
+          onClick={submitData}>
+          확인
+        </button>
         <button className="w-full p-[10px] shadow-md rounded-md border hover:bg-red-500 hover:text-white">취소</button>
       </div>
     </div>
