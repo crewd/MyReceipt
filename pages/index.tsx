@@ -52,7 +52,7 @@ const MainPage = ({ data }: { data: Data }) => {
   };
 
   const changeBasicFunds = () => {
-    if (basicFunds) {
+    if (basicFunds || basicFunds === 0) {
       setAsset((current) => ({ ...current, basicFunds: Number(basicFunds) }));
     }
     return setMenuOpened(false);
@@ -80,6 +80,7 @@ const MainPage = ({ data }: { data: Data }) => {
             <input
               className="px-[10px] sm:w-[300px] w-full py-[5px] text-regular border border-gray-300 rounded-md outline-none"
               type="number"
+              min={0}
               value={basicFunds}
               placeholder="기초 자금 변경"
               onChange={inputNumber}

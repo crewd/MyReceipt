@@ -87,13 +87,13 @@ const WritePage = () => {
   };
 
   const priceSum = () => {
-    let consumption = 0;
+    let totalPrice = 0;
 
     contents.map((value) => {
-      consumption += Number(value.price);
+      totalPrice += Number(value.price);
     });
 
-    return consumption;
+    return totalPrice;
   };
 
   return (
