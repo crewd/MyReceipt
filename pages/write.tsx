@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import BreakDownCard from '../components/common/BreakDownCard';
 
@@ -221,7 +222,11 @@ const WritePage = () => {
           onClick={submitData}>
           확인
         </button>
-        <button className="w-full p-[10px] shadow-md rounded-md border hover:bg-red-500 hover:text-white">취소</button>
+        <Link href="/">
+          <button className="w-full p-[10px] shadow-md rounded-md border hover:bg-red-500 hover:text-white">
+            <a>취소</a>
+          </button>
+        </Link>
       </div>
     </div>
   );
