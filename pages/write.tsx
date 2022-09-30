@@ -86,6 +86,16 @@ const WritePage = () => {
     console.log(data);
   };
 
+  const priceSum = () => {
+    let consumption = 0;
+
+    contents.map((value) => {
+      consumption += Number(value.price);
+    });
+
+    return consumption;
+  };
+
   return (
     <div className="pb-[20px]">
       <div className="p-[20px] w-full sm:flex sm:justify-between">
@@ -180,23 +190,29 @@ const WritePage = () => {
         </div>
       </div>
       {contents.length > 0 && (
-        <div className="border-gray-400 border-double border-y-4">
-          <nav className="flex justify-between text-md py-[10px] px-[20px] border-b border-gray-400">
-            <div>메뉴</div>
-            <div>가격</div>
-            <div>삭제</div>
-          </nav>
-          {contents.map((content) => {
-            return (
-              <div key={content.id}>
-                <BreakDownCard
-                  title={content.subTitle}
-                  price={Number(content.price)}
-                  deleteContent={() => deleteContent(content.id)}
-                />
-              </div>
-            );
-          })}
+        <div>
+          <div className="border-gray-400 border-double border-y-4">
+            <nav className="flex justify-between text-md py-[10px] px-[20px] border-b border-gray-400">
+              <div>메뉴</div>
+              <div>가격</div>
+              <div>삭제</div>
+            </nav>
+            {contents.map((content) => {
+              return (
+                <div key={content.id}>
+                  <BreakDownCard
+                    title={content.subTitle}
+                    price={Number(content.price)}
+                    deleteContent={() => deleteContent(content.id)}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div className="px-[20px] py-[40px] flex justify-between">
+            <h2 className="text-lg font-bold">TOTAL</h2>
+            <h2 className={`text-lg font-bold`}>{priceSum().toLocaleString()}</h2>
+          </div>
         </div>
       )}
       <div className="my-[20px] flex justify-between">
