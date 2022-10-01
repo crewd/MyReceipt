@@ -8,6 +8,7 @@ import { assetState } from '../utils/recoils/asset';
 type Data = {
   basicFunds: number;
   consumption: {
+    id: number;
     title: string;
     date: string;
     price: number;
@@ -95,12 +96,11 @@ const MainPage = ({ data }: { data: Data }) => {
         )}
 
         {asset.consumption.map((consumption) => (
-          <BreakDownCard
-            key={consumption.title}
-            title={consumption.title}
-            date={consumption.date}
-            price={consumption.price}
-          />
+          <Link href={`/detail/${consumption.id}`} key={consumption.id}>
+            <a>
+              <BreakDownCard title={consumption.title} date={consumption.date} price={consumption.price} />
+            </a>
+          </Link>
         ))}
         <Link href="/write">
           <a>
@@ -121,6 +121,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     basicFunds: 100000,
     consumption: [
       {
+        id: 1,
         title: '이마트',
         date: '2022/09/22',
         price: -75000,

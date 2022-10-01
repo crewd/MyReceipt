@@ -6,6 +6,7 @@ export const assetState = atom({
     basicFunds: 0,
     consumption: [
       {
+        id: 0,
         title: '',
         date: '',
         price: 0,
