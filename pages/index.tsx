@@ -3,19 +3,10 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import BreakDownCard from '../components/common/BreakDownCard';
+import { Items } from '../types/items';
 import { assetState } from '../utils/recoils/asset';
 
-type Data = {
-  basicFunds: number;
-  consumption: {
-    id: number;
-    title: string;
-    date: string;
-    price: number;
-  }[];
-};
-
-const MainPage = ({ data }: { data: Data }) => {
+const MainPage = ({ data }: { data: Items }) => {
   // 기초자금 수정 메뉴
   const [menuOpened, setMenuOpened] = useState(false);
   // 기초 자금

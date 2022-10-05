@@ -1,21 +1,23 @@
 import { GetServerSideProps } from 'next';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { DetailItem } from '../../types/items';
+import { detailItemState } from '../../utils/recoils/asset';
 
-type Data = {
-  title: string;
-  date: string;
-  totalPrice: number;
-  items: {
-    id: number;
-    subTitle: string;
-    price: number;
-  }[];
-};
+const Detail = ({ data }: { data: DetailItem }) => {
+  const [asset, setAsset] = useRecoilState(detailItemState);
 
-const Detail = ({ data }: { data: Data }) => {
-  console.log(data);
+  useEffect(() => {
+    if (data) {
+      setAsset(data);
+    }
+  }, []);
+
   return (
-    <div>
-      <p>상세 페이지</p>
+    <div className="flex justify-center py-[20px]">
+      <div>
+        <h1></h1>
+      </div>
     </div>
   );
 };
