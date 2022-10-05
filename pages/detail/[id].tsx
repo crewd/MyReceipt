@@ -1,22 +1,36 @@
 import { GetServerSideProps } from 'next';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import BreakDownCard from '../../components/common/BreakDownCard';
 import { DetailItem } from '../../types/items';
 import { detailItemState } from '../../utils/recoils/asset';
 
 const Detail = ({ data }: { data: DetailItem }) => {
-  const [asset, setAsset] = useRecoilState(detailItemState);
+  const [detailItem, setDetailItem] = useRecoilState(detailItemState);
 
   useEffect(() => {
     if (data) {
-      setAsset(data);
+      setDetailItem(data);
     }
   }, []);
 
   return (
-    <div className="flex justify-center py-[20px]">
-      <div>
-        <h1></h1>
+    <div>
+      <div className="py-[15px] border-b w-full border-gray-400">
+        <h2 className="text-xl font-bold text-center">{detailItem.title}</h2>
+      </div>
+      <nav className="flex justify-between text-md px-[20px] py-[10px] border-b border-gray-400">
+        <div>메뉴</div>
+        <div>가격</div>
+      </nav>
+      <div className="border-b-4 border-gray-400 border-double">
+        {detailItem.items.map((data) => {
+          return <BreakDownCard key={data.id} title={data.subTitle} price={data.price} />;
+        })}
+      </div>
+      <div className="px-[20px] py-[40px] border-double border-t-4 border-gray-500 flex justify-between">
+        <h2 className="text-lg font-bold">Total</h2>
+        <h2 className={`text-lg font-bold`}>{detailItem.totalPrice}</h2>
       </div>
     </div>
   );
