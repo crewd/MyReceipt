@@ -6,13 +6,15 @@ import BreakDownCard from '../components/common/BreakDownCard';
 import { Items } from '../types/items';
 import { assetState } from '../utils/recoils/asset';
 
-const MainPage = ({ data }: { data: Items }) => {
+const MainPage = ({ data, cookie }: { data: Items; cookie: any }) => {
   // 기초자금 수정 메뉴
   const [menuOpened, setMenuOpened] = useState(false);
   // 기초 자금
   const [basicFunds, setBasicFunds] = useState(0);
   // 내역 recoil
   const [asset, setAsset] = useRecoilState(assetState);
+
+  console.log(cookie);
 
   useEffect(() => {
     if (data) {
@@ -107,7 +109,9 @@ const MainPage = ({ data }: { data: Items }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookie = context.req.headers.cookie ? context.req.headers.cookie : '';
+
   const data = {
     basicFunds: 100000,
     consumption: [
@@ -122,6 +126,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       data,
+      cookie,
     },
   };
 };
