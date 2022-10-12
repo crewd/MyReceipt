@@ -17,7 +17,7 @@ const MainPage = ({ data }: { data: Items }) => {
 
   useEffect(() => {
     const getList = async () => {
-      const { data } = await axios.get('/api/list');
+      const { data } = await axios.post('/api/addBasicFunds', { basicFunds: 300 });
       return data;
     };
     console.log(getList());
