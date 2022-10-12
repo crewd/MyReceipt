@@ -5,7 +5,7 @@ export const assetState = atom<Items>({
   key: 'assetState',
   default: {
     basicFunds: 0,
-    consumption: [
+    items: [
       {
         id: 0,
         title: '',
@@ -22,12 +22,6 @@ export const detailItemState = atom<DetailItem>({
     title: '',
     date: '',
     totalPrice: 0,
-    items: [
-      {
-        id: 0,
-        subTitle: '',
-        price: 0,
-      },
-    ],
+    items: [],
   },
 });

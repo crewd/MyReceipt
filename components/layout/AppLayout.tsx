@@ -9,7 +9,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             <a>MyReceipt</a>
           </Link>
         </h1>
-        <p className="flex justify-end w-full text-gray-500">닉네임 님</p>
       </header>
       <main>{children}</main>
     </div>

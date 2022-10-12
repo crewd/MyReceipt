@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -6,15 +7,21 @@ import BreakDownCard from '../components/common/BreakDownCard';
 import { Items } from '../types/items';
 import { assetState } from '../utils/recoils/asset';
 
-const MainPage = ({ data, cookie }: { data: Items; cookie: any }) => {
+const MainPage = ({ data }: { data: Items }) => {
   // 기초자금 수정 메뉴
   const [menuOpened, setMenuOpened] = useState(false);
   // 기초 자금
-  const [basicFunds, setBasicFunds] = useState(0);
+  const [basicFunds, setBasicFunds] = useState<number>(0);
   // 내역 recoil
   const [asset, setAsset] = useRecoilState(assetState);
 
-  console.log(cookie);
+  useEffect(() => {
+    const getList = async () => {
+      const { data } = await axios.get('/api/list');
+      return data;
+    };
+    console.log(getList());
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -32,7 +39,7 @@ const MainPage = ({ data, cookie }: { data: Items; cookie: any }) => {
   const priceCalc = () => {
     let consumption = 0;
 
-    asset.consumption.map((value) => {
+    asset.items.map((value) => {
       consumption += value.price;
     });
 
@@ -59,6 +66,30 @@ const MainPage = ({ data, cookie }: { data: Items; cookie: any }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuOpened]);
 
+  if (!asset.basicFunds) {
+    return (
+      <div className="">
+        <div className="p-[20px] border-b-4 border-double border-gray-400">
+          <h3 className="font-bold text-md">기초 자금을 입력해 주세요</h3>
+        </div>
+        <div className="p-[20px] flex flex-col gap-[20px]">
+          <input
+            className="px-[10px] w-full py-[10px] text-regular border border-gray-300 rounded-md outline-none"
+            type="number"
+            value={basicFunds ? basicFunds : ''}
+            placeholder="기초 자금"
+            onChange={inputNumber}
+          />
+          <button
+            className="w-full p-[10px] shadow-md rounded-md border hover:bg-primary hover:text-white"
+            onClick={changeBasicFunds}>
+            입력
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <nav className="flex justify-between text-md px-[20px] py-[10px] border-b border-gray-400">
@@ -75,7 +106,7 @@ const MainPage = ({ data, cookie }: { data: Items; cookie: any }) => {
               className="px-[10px] sm:w-[300px] w-full py-[5px] text-regular border border-gray-300 rounded-md outline-none"
               type="number"
               min={0}
-              value={basicFunds}
+              value={basicFunds ? basicFunds : ''}
               placeholder="기초 자금 변경"
               onChange={inputNumber}
             />
@@ -88,7 +119,7 @@ const MainPage = ({ data, cookie }: { data: Items; cookie: any }) => {
           </div>
         )}
 
-        {asset.consumption.map((consumption) => (
+        {asset.items.map((consumption) => (
           <Link href={`/detail/${consumption.id}`} key={consumption.id}>
             <a>
               <BreakDownCard title={consumption.title} date={consumption.date} price={consumption.price} />
@@ -109,24 +140,14 @@ const MainPage = ({ data, cookie }: { data: Items; cookie: any }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookie = context.req.headers.cookie ? context.req.headers.cookie : '';
-
+export const getServerSideProps: GetServerSideProps = async () => {
   const data = {
-    basicFunds: 100000,
-    consumption: [
-      {
-        id: 1,
-        title: '이마트',
-        date: '2022/09/22',
-        price: -75000,
-      },
-    ],
+    basicFunds: 0,
+    items: [],
   };
   return {
     props: {
       data,
-      cookie,
     },
   };
 };

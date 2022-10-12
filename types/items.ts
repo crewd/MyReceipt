@@ -1,6 +1,6 @@
 export type Items = {
   basicFunds: number;
-  consumption: {
+  items: {
     id: number;
     title: string;
     date: string;
