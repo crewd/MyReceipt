@@ -13,12 +13,10 @@ const MainPage = () => {
   // 기초 자금
   const [basicFunds, setBasicFunds] = useState<number>(0);
 
-  // 내역 리스트 recoil selector
+  // 내역 리스트 recoil selector 비동기
   const assetList = useRecoilValueLoadable(getAssetListSelector);
   const assetListValue: ItemList = assetList.contents;
   const refresh = useRecoilRefresher_UNSTABLE(getAssetListSelector);
-
-  console.log(assetListValue);
 
   useEffect(() => {
     if (assetListValue) {
@@ -45,19 +43,22 @@ const MainPage = () => {
     return result;
   };
 
+  // 숫자만 입력
   const inputNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setBasicFunds(Number(value));
   };
 
-  const changeBasicFunds = async () => {
+  // 기초 자금 변경
+  const changeBasicFunds = () => {
     if (basicFunds || basicFunds === 0) {
-      await addBasicFunds(Number(basicFunds));
+      addBasicFunds(Number(basicFunds));
       refresh();
     }
     return setMenuOpened(false);
   };
 
+  // 메뉴 닫히면 기초 자금 input 초기화
   useEffect(() => {
     if (!menuOpened) {
       return setBasicFunds(assetListValue.basicFunds);
@@ -65,12 +66,7 @@ const MainPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuOpened]);
 
-  // const basicFundsSubmit = () => {
-  //   if(basicFunds) {
-  //     return
-  //   }
-  // }
-
+  // 기초 자금이 0일때
   if (!assetListValue.basicFunds) {
     return (
       <div className="">
@@ -95,6 +91,7 @@ const MainPage = () => {
     );
   }
 
+  // recoil selector 로딩 상태
   if (assetList.state === 'loading') {
     return <div>로딩중</div>;
   }
