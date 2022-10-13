@@ -44,7 +44,7 @@ const MainPage = () => {
   };
 
   // 숫자만 입력
-  const inputNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setBasicFunds(Number(value));
   };
@@ -84,7 +84,7 @@ const MainPage = () => {
             type="number"
             value={basicFunds ? basicFunds : ''}
             placeholder="기초 자금"
-            onChange={inputNumber}
+            onChange={onChangeHandler}
           />
           <button
             className="w-full p-[10px] shadow-md rounded-md border hover:bg-primary hover:text-white"
@@ -114,7 +114,7 @@ const MainPage = () => {
               min={0}
               value={basicFunds ? basicFunds : ''}
               placeholder="기초 자금 변경"
-              onChange={inputNumber}
+              onChange={onChangeHandler}
             />
             <div className="flex justify-end sm:justify-start sm:p-0 p-[10px]">
               <button onClick={changeBasicFunds}>수정</button>
