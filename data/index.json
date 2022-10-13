@@ -5,7 +5,8 @@
       "id": 0,
       "title": "",
       "date": "",
-      "totalPrice": 0
+      "totalPrice": 0,
+      "item": [{ "id": 0, "subTitle": "string", "price": 0 }]
     }
   ]
 }
