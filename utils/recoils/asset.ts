@@ -1,4 +1,5 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
+import { getList } from '../../api';
 import { DetailItem, ItemList } from '../../types/items';
 
 export const assetState = atom<ItemList>({
@@ -13,6 +14,18 @@ export const assetState = atom<ItemList>({
         totalPrice: 0,
       },
     ],
+  },
+});
+
+export const getAssetListSelector = selector<ItemList>({
+  key: 'getAssetList',
+  get: async ({ get }) => {
+    get(assetState);
+    const data = await getList();
+    return data;
+  },
+  set: ({ set }, newValue) => {
+    set(assetState, newValue);
   },
 });
 

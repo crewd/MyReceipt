@@ -6,7 +6,7 @@
       "title": "",
       "date": "",
       "totalPrice": 0,
-      "item": [{ "id": 0, "subTitle": "string", "price": 0 }]
+      "items": [{ "id": 0, "subTitle": "string", "price": 0 }]
     }
   ]
 }

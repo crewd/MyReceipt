@@ -1,66 +1,47 @@
-import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
+import { addBasicFunds } from '../api';
 import BreakDownCard from '../components/common/BreakDownCard';
 import { ItemList } from '../types/items';
-import { assetState } from '../utils/recoils/asset';
+import { getAssetListSelector } from '../utils/recoils/asset';
 
-const MainPage = ({ data }: { data: ItemList }) => {
+const MainPage = () => {
   // 기초자금 수정 메뉴
   const [menuOpened, setMenuOpened] = useState(false);
   // 기초 자금
   const [basicFunds, setBasicFunds] = useState<number>(0);
-  // 내역 recoil
-  const [asset, setAsset] = useRecoilState(assetState);
+
+  // 내역 리스트 recoil selector
+  const assetList = useRecoilValueLoadable(getAssetListSelector);
+  const assetListValue: ItemList = assetList.contents;
+  const refresh = useRecoilRefresher_UNSTABLE(getAssetListSelector);
+
+  console.log(assetListValue);
 
   useEffect(() => {
-    const bf = async () => {
-      const { data } = await axios.post('/api/basicFunds', { basicFunds: 600 });
-      return data;
-    };
-    const getList = async () => {
-      const { data } = await axios.get('/api/list');
-      return data;
-    };
-    const itemPush = async () => {
-      const { data } = await axios.post('/api/item', {
-        item: {
-          id: 1,
-          title: '이마트',
-          date: '2022/10/13',
-          totalPrice: '75000',
-        },
-      });
-      return data;
-    };
-    console.log(bf());
-    console.log(getList());
-    console.log(itemPush());
-  }, []);
-
-  useEffect(() => {
-    if (data) {
-      setAsset(data);
+    if (assetListValue) {
+      setBasicFunds(assetListValue.basicFunds);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (asset) {
-      setBasicFunds(asset.basicFunds);
-    }
-  }, [asset]);
+  }, [assetListValue]);
 
   const priceCalc = () => {
+    if (assetList.state === 'loading') {
+      return;
+    }
+
     let consumption = 0;
 
-    asset.items.map((value) => {
+    if (!assetListValue.items) {
+      return consumption;
+    }
+
+    assetListValue.items.map((value) => {
       consumption += value.totalPrice;
     });
 
-    const result = asset.basicFunds + consumption;
+    const result = assetListValue.basicFunds + consumption;
     return result;
   };
 
@@ -69,16 +50,17 @@ const MainPage = ({ data }: { data: ItemList }) => {
     setBasicFunds(Number(value));
   };
 
-  const changeBasicFunds = () => {
+  const changeBasicFunds = async () => {
     if (basicFunds || basicFunds === 0) {
-      setAsset((current) => ({ ...current, basicFunds: Number(basicFunds) }));
+      await addBasicFunds(Number(basicFunds));
+      refresh();
     }
     return setMenuOpened(false);
   };
 
   useEffect(() => {
     if (!menuOpened) {
-      return setBasicFunds(asset.basicFunds);
+      return setBasicFunds(assetListValue.basicFunds);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuOpened]);
@@ -89,7 +71,7 @@ const MainPage = ({ data }: { data: ItemList }) => {
   //   }
   // }
 
-  if (!asset.basicFunds) {
+  if (!assetListValue.basicFunds) {
     return (
       <div className="">
         <div className="p-[20px] border-b-4 border-double border-gray-400">
@@ -113,6 +95,10 @@ const MainPage = ({ data }: { data: ItemList }) => {
     );
   }
 
+  if (assetList.state === 'loading') {
+    return <div>로딩중</div>;
+  }
+
   return (
     <div>
       <nav className="flex justify-between text-md px-[20px] py-[10px] border-b border-gray-400">
@@ -121,7 +107,7 @@ const MainPage = ({ data }: { data: ItemList }) => {
       </nav>
       <div>
         <button className="w-full" onClick={() => setMenuOpened(!menuOpened)}>
-          <BreakDownCard title="기초 자금" price={asset.basicFunds} />
+          <BreakDownCard title="기초 자금" price={assetListValue.basicFunds} />
         </button>
         {menuOpened && (
           <div className="p-[20px] sm:flex justify-between bg-gray-100/80">
@@ -142,13 +128,14 @@ const MainPage = ({ data }: { data: ItemList }) => {
           </div>
         )}
 
-        {asset.items.map((consumption) => (
-          <Link href={`/detail/${consumption.id}`} key={consumption.title}>
-            <a>
-              <BreakDownCard title={consumption.title} date={consumption.date} price={consumption.totalPrice} />
-            </a>
-          </Link>
-        ))}
+        {assetListValue.items &&
+          assetListValue.items.map((consumption) => (
+            <Link href={`/detail/${consumption.id}`} key={consumption.title}>
+              <a>
+                <BreakDownCard title={consumption.title} date={consumption.date} price={consumption.totalPrice} />
+              </a>
+            </Link>
+          ))}
         <Link href="/write">
           <a>
             <div className="p-[10px] text-md text-center hover:bg-gray-100/80 w-full">내역 추가 </div>

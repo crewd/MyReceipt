@@ -7,7 +7,7 @@ export const getList = async () => {
   return data;
 };
 
-export const changeBasicFunds = async () => {
-  const { data } = await axios.post('/api/basicFunds', { basicFunds: 600 });
+export const addBasicFunds = async (price: number) => {
+  const { data } = await axios.post(`${baseURL}/basicFunds`, { basicFunds: price });
   return data;
 };
