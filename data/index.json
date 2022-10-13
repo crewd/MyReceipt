@@ -1,4 +1,11 @@
 {
   "basicFunds": 0,
-  "Itmes": []
+  "Items": [
+    {
+      "id": 0,
+      "title": "",
+      "date": "",
+      "totalPrice": 0
+    }
+  ]
 }

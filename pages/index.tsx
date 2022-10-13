@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import BreakDownCard from '../components/common/BreakDownCard';
-import { Items } from '../types/items';
+import { ItemList } from '../types/items';
 import { assetState } from '../utils/recoils/asset';
 
-const MainPage = ({ data }: { data: Items }) => {
+const MainPage = ({ data }: { data: ItemList }) => {
   // 기초자금 수정 메뉴
   const [menuOpened, setMenuOpened] = useState(false);
   // 기초 자금
@@ -24,8 +24,20 @@ const MainPage = ({ data }: { data: Items }) => {
       const { data } = await axios.get('/api/list');
       return data;
     };
-    console.log(getList());
+    const itemPush = async () => {
+      const { data } = await axios.post('/api/item', {
+        item: {
+          id: 1,
+          title: '이마트',
+          date: '2022/10/13',
+          totalPrice: '75000',
+        },
+      });
+      return data;
+    };
     console.log(bf());
+    console.log(getList());
+    console.log(itemPush());
   }, []);
 
   useEffect(() => {
@@ -45,7 +57,7 @@ const MainPage = ({ data }: { data: Items }) => {
     let consumption = 0;
 
     asset.items.map((value) => {
-      consumption += value.price;
+      consumption += value.totalPrice;
     });
 
     const result = asset.basicFunds + consumption;
@@ -131,9 +143,9 @@ const MainPage = ({ data }: { data: Items }) => {
         )}
 
         {asset.items.map((consumption) => (
-          <Link href={`/detail/${consumption.id}`} key={consumption.id}>
+          <Link href={`/detail/${consumption.id}`} key={consumption.title}>
             <a>
-              <BreakDownCard title={consumption.title} date={consumption.date} price={consumption.price} />
+              <BreakDownCard title={consumption.title} date={consumption.date} price={consumption.totalPrice} />
             </a>
           </Link>
         ))}

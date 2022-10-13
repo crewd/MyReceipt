@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
-import { DetailItem, Items } from '../../types/items';
+import { DetailItem, ItemList } from '../../types/items';
 
-export const assetState = atom<Items>({
+export const assetState = atom<ItemList>({
   key: 'assetState',
   default: {
     basicFunds: 0,
@@ -10,7 +10,7 @@ export const assetState = atom<Items>({
         id: 0,
         title: '',
         date: '',
-        price: 0,
+        totalPrice: 0,
       },
     ],
   },
@@ -19,6 +19,7 @@ export const assetState = atom<Items>({
 export const detailItemState = atom<DetailItem>({
   key: 'detailItemState',
   default: {
+    id: 0,
     title: '',
     date: '',
     totalPrice: 0,

@@ -3,6 +3,11 @@ import data from '../../data/index.json';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    return res.status(200).json({ data });
+    const items = data.Items.filter((item) => item.id > 0);
+    const dataFilter = {
+      basicFunds: data.basicFunds,
+      Items: items,
+    };
+    return res.status(200).json(dataFilter);
   }
 }
