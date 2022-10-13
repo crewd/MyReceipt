@@ -15,7 +15,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const dataFilter = {
       basicFunds: data.basicFunds,
-      Items: itemList,
+      items: itemList,
     };
     return res.status(200).json(dataFilter);
   }

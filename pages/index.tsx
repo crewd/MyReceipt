@@ -50,9 +50,9 @@ const MainPage = () => {
   };
 
   // 기초 자금 변경
-  const changeBasicFunds = () => {
+  const changeBasicFunds = async () => {
     if (basicFunds || basicFunds === 0) {
-      addBasicFunds(Number(basicFunds));
+      await addBasicFunds(Number(basicFunds));
       refresh();
     }
     return setMenuOpened(false);
