@@ -66,10 +66,15 @@ const MainPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuOpened]);
 
+  // recoil selector 로딩 상태
+  if (assetList.state === 'loading') {
+    return <svg className="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24" />;
+  }
+
   // 기초 자금이 0일때
   if (!assetListValue.basicFunds) {
     return (
-      <div className="">
+      <div>
         <div className="p-[20px] border-b-4 border-double border-gray-400">
           <h3 className="font-bold text-md">기초 자금을 입력해 주세요</h3>
         </div>
@@ -89,11 +94,6 @@ const MainPage = () => {
         </div>
       </div>
     );
-  }
-
-  // recoil selector 로딩 상태
-  if (assetList.state === 'loading') {
-    return <div>로딩중</div>;
   }
 
   return (
