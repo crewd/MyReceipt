@@ -16,11 +16,16 @@ const MainPage = ({ data }: { data: Items }) => {
   const [asset, setAsset] = useRecoilState(assetState);
 
   useEffect(() => {
+    const bf = async () => {
+      const { data } = await axios.post('/api/basicFunds', { basicFunds: 600 });
+      return data;
+    };
     const getList = async () => {
-      const { data } = await axios.post('/api/basicFunds', { basicFunds: 300 });
+      const { data } = await axios.get('/api/list');
       return data;
     };
     console.log(getList());
+    console.log(bf());
   }, []);
 
   useEffect(() => {
@@ -65,6 +70,12 @@ const MainPage = ({ data }: { data: Items }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [menuOpened]);
+
+  // const basicFundsSubmit = () => {
+  //   if(basicFunds) {
+  //     return
+  //   }
+  // }
 
   if (!asset.basicFunds) {
     return (
