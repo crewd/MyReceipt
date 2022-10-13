@@ -27,11 +27,11 @@ const MainPage = () => {
   }, [assetListValue]);
 
   const priceCalc = () => {
-    if (assetList.state === 'loading') {
-      return;
-    }
-
     let consumption = 0;
+
+    if (assetList.state === 'loading') {
+      return consumption;
+    }
 
     if (!assetListValue.items) {
       return consumption;
