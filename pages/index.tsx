@@ -43,7 +43,7 @@ const MainPage = () => {
     return result;
   };
 
-  // 숫자만 입력
+  // onChange 함수
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setBasicFunds(Number(value));

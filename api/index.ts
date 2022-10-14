@@ -11,3 +11,8 @@ export const addBasicFunds = async (price: number) => {
   const { data } = await axios.post(`${baseURL}/basicFunds`, { basicFunds: price });
   return data;
 };
+
+export const addDetailItem = async (item) => {
+  const { data } = await axios.post(`${baseURL}/item`, { item });
+  return data;
+};
