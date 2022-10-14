@@ -51,6 +51,9 @@ const MainPage = () => {
 
   // 기초 자금 변경
   const changeBasicFunds = async () => {
+    if (basicFunds === assetListValue.basicFunds) {
+      return setMenuOpened(false);
+    }
     if (basicFunds || basicFunds === 0) {
       await addBasicFunds(Number(basicFunds));
       refresh();

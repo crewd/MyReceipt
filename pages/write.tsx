@@ -1,26 +1,29 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useRecoilRefresher_UNSTABLE } from 'recoil';
+import { addDetailItem } from '../api';
 import BreakDownCard from '../components/common/BreakDownCard';
-
-type Content = {
-  subTitle: string;
-  price: number | string;
-  id: number;
-};
+import { DetailItem, Item } from '../types/items';
+import { getAssetListSelector } from '../utils/recoils/asset';
 
 const WritePage = () => {
+  const router = useRouter();
+
   const [mainTitle, setMainTitle] = useState('');
   const [date, setDate] = useState({ year: '', month: '', day: '' });
   const { year, month, day } = date;
 
-  const [contents, setContents] = useState<Content[]>([]);
-  const [content, setContent] = useState<Content>({ subTitle: '', price: '', id: 0 });
+  const [contents, setContents] = useState<Item[]>([]);
+  const [content, setContent] = useState<Item>({ subTitle: '', price: 0, id: 0 });
   const { subTitle, price } = content;
 
   const [income, setIncome] = useState(true);
   const [expenditure, setExpenditure] = useState(false);
 
   const [idCount, setIdCount] = useState(1);
+
+  const refresh = useRecoilRefresher_UNSTABLE(getAssetListSelector);
 
   useEffect(() => {
     if (income) {
@@ -52,6 +55,16 @@ const WritePage = () => {
     setDate((current) => ({ ...current, [name]: value }));
   };
 
+  const priceSum = () => {
+    let totalPrice = 0;
+
+    contents.map((value) => {
+      totalPrice += Number(value.price);
+    });
+
+    return totalPrice;
+  };
+
   const addContent = () => {
     if (!subTitle || !price) {
       return;
@@ -67,7 +80,7 @@ const WritePage = () => {
 
   useEffect(() => {
     if (contents) {
-      setContent({ subTitle: '', price: '', id: 0 });
+      setContent({ subTitle: '', price: 0, id: 0 });
     }
   }, [contents]);
 
@@ -75,26 +88,19 @@ const WritePage = () => {
     setContents(contents.filter((data) => data.id !== id));
   };
 
-  const submitData = () => {
+  const submitData = async () => {
     if (!mainTitle || !date || !contents) {
       return;
     }
-    const data = {
+    const data: DetailItem = {
       title: mainTitle,
-      date: date,
-      consumption: contents,
+      date: `${date.year}/${date.month}/${date.day}`,
+      totalPrice: priceSum(),
+      items: contents,
     };
-    console.log(data);
-  };
-
-  const priceSum = () => {
-    let totalPrice = 0;
-
-    contents.map((value) => {
-      totalPrice += Number(value.price);
-    });
-
-    return totalPrice;
+    await addDetailItem(data);
+    refresh();
+    return router.push('/');
   };
 
   return (

@@ -1,11 +1,10 @@
-type Item = {
+export type Item = {
   id: number;
   subTitle: string;
   price: number;
 };
 
 export type DetailItem = {
-  id: number;
   title: string;
   date: string;
   totalPrice: number;

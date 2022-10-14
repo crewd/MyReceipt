@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { DetailItem } from '../types/items';
 
 const baseURL = '/api';
 
@@ -12,7 +13,7 @@ export const addBasicFunds = async (price: number) => {
   return data;
 };
 
-export const addDetailItem = async (item) => {
-  const { data } = await axios.post(`${baseURL}/item`, { item });
+export const addDetailItem = async (item: DetailItem) => {
+  const { data } = await axios.post(`${baseURL}/item`, { item: item });
   return data;
 };
