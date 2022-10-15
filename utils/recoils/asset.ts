@@ -4,18 +4,15 @@ import { DetailItem, ItemList } from '../../types/items';
 
 export const getAssetListSelector = selector<ItemList>({
   key: 'getAssetList',
-  get: async () => {
-    const data = await getList();
+  get: () => {
+    const data = getList();
     return data;
   },
 });
 
-export const detailItemState = atom<DetailItem>({
-  key: 'detailItemState',
-  default: {
-    title: '',
-    date: '',
-    totalPrice: 0,
-    items: [],
-  },
-});
+// export const detailItemState = selector<DetailItem>({
+//   key: 'detailItemState',
+//   get: () => {
+
+//   }
+// });

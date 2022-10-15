@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import BreakDownCard from '../../components/common/BreakDownCard';
 import { DetailItem } from '../../types/items';
-import { detailItemState } from '../../utils/recoils/asset';
 
 const Detail = ({ data }: { data: DetailItem }) => {
   const [detailItem, setDetailItem] = useRecoilState(detailItemState);

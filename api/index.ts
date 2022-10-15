@@ -9,7 +9,7 @@ export const getList = async () => {
 };
 
 export const addBasicFunds = async (price: number) => {
-  const { data } = await axios.post(`${baseURL}/basicFunds`, { basicFunds: price });
+  const data = await axios.post(`${baseURL}/basicFunds`, { basicFunds: price });
   return data;
 };
 

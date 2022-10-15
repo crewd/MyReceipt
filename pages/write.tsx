@@ -100,7 +100,7 @@ const WritePage = () => {
     };
     await addDetailItem(data);
     refresh();
-    return router.push('/');
+    return router.replace('/');
   };
 
   return (
