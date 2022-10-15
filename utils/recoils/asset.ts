@@ -1,18 +1,19 @@
-import { atom, selector } from 'recoil';
-import { getList } from '../../api';
+import { selector, selectorFamily } from 'recoil';
+import { getDetailItem, getList } from '../../api';
 import { DetailItem, ItemList } from '../../types/items';
 
 export const getAssetListSelector = selector<ItemList>({
-  key: 'getAssetList',
+  key: 'getAssetListSelector',
   get: () => {
     const data = getList();
     return data;
   },
 });
 
-// export const detailItemState = selector<DetailItem>({
-//   key: 'detailItemState',
-//   get: () => {
-
-//   }
-// });
+export const getDetailItemSelector = selectorFamily<DetailItem, number>({
+  key: 'getDetailItemSelector',
+  get: (id: number) => () => {
+    const detailItem = getDetailItem(id);
+    return detailItem;
+  },
+});

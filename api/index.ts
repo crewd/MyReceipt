@@ -17,3 +17,8 @@ export const addDetailItem = async (item: DetailItem) => {
   const { data } = await axios.post(`${baseURL}/item`, { item: item });
   return data;
 };
+
+export const getDetailItem = async (id: number) => {
+  const { data } = await axios.get(`${baseURL}/item/${id}`);
+  return data;
+};
