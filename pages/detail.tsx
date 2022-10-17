@@ -3,7 +3,7 @@ import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
 import { deleteItem } from '../api';
 import BreakDownCard from '../components/common/BreakDownCard';
 import { DetailItem } from '../types/items';
-import { getDetailItemSelector } from '../utils/recoils/asset';
+import { getAssetListSelector, getDetailItemSelector } from '../utils/recoils/asset';
 
 const Detail = () => {
   const router = useRouter();
@@ -11,10 +11,12 @@ const Detail = () => {
   const detailItem = useRecoilValueLoadable(getDetailItemSelector(Number(id)));
   const detailItemData: DetailItem = detailItem.contents;
   const refresh = useRecoilRefresher_UNSTABLE(getDetailItemSelector(Number(id)));
+  const refreshList = useRecoilRefresher_UNSTABLE(getAssetListSelector);
 
   const deleteDetailItem = async () => {
     await deleteItem(Number(id));
     refresh();
+    refreshList();
     return router.replace('/');
   };
 
