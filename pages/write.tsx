@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useRecoilRefresher_UNSTABLE } from 'recoil';
+// import { useRecoilRefresher_UNSTABLE } from 'recoil';
 import { addDetailItem } from '../api';
 import BreakDownCard from '../components/common/BreakDownCard';
 import { DetailItem, Item } from '../types/items';
-import { getAssetListSelector } from '../utils/recoils/asset';
+// import { getAssetListSelector } from '../utils/recoils/asset';
 
 const WritePage = () => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const WritePage = () => {
 
   const [idCount, setIdCount] = useState(1);
 
-  const refresh = useRecoilRefresher_UNSTABLE(getAssetListSelector);
+  // const refresh = useRecoilRefresher_UNSTABLE(getAssetListSelector);
 
   useEffect(() => {
     if (income) {
@@ -99,7 +99,6 @@ const WritePage = () => {
       items: contents,
     };
     await addDetailItem(data);
-    refresh();
     return router.replace('/');
   };
 

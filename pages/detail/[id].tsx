@@ -1,16 +1,23 @@
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
 import { deleteItem } from '../../api';
 import BreakDownCard from '../../components/common/BreakDownCard';
 import { DetailItem } from '../../types/items';
-import { getAssetListSelector, getDetailItemSelector } from '../../utils/recoils/asset';
+import { getDetailItemSelector } from '../../utils/recoils/asset';
 
 const Detail = () => {
   const router = useRouter();
   const { id } = router.query;
   const detailItem = useRecoilValueLoadable(getDetailItemSelector(Number(id)));
   const detailItemData: DetailItem = detailItem.contents;
-  const refresh = useRecoilRefresher_UNSTABLE(getAssetListSelector);
+  const refresh = useRecoilRefresher_UNSTABLE(getDetailItemSelector(Number(id)));
+
+  useEffect(() => {
+    refresh();
+  }, []);
+
+  // const listRefresh = useRecoilRefresher_UNSTABLE(getAssetListSelector);
   // const detailItemData = {
   //   title: '이마트',
   //   date: '2022/09/22',

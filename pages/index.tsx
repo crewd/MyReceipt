@@ -19,6 +19,10 @@ const MainPage = () => {
   const refresh = useRecoilRefresher_UNSTABLE(getAssetListSelector);
 
   useEffect(() => {
+    refresh();
+  }, []);
+
+  useEffect(() => {
     if (assetListValue) {
       setBasicFunds(assetListValue.basicFunds);
     }
