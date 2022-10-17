@@ -24,12 +24,8 @@ export const addDetailItem = async (item: DetailItem) => {
 };
 
 export const getDetailItem = async (id: number) => {
-  try {
-    const { data } = await axios.get(`${baseURL}/item/${id}`);
-    return data;
-  } catch (err) {
-    throw err;
-  }
+  const { data } = await axios.get(`${baseURL}/item/${id}`);
+  return data;
 };
 
 export const deleteItem = async (id: number) => {
