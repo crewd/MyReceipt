@@ -13,6 +13,10 @@ const Detail = () => {
   const detailItemData: DetailItem = detailItem.contents;
   const refresh = useRecoilRefresher_UNSTABLE(getDetailItemSelector(Number(id)));
 
+  useEffect(() => {
+    refresh();
+  }, []);
+
   const deleteDetailItem = async () => {
     await deleteItem(Number(id));
     refresh();
