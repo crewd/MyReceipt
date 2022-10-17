@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
 import { deleteItem } from '../api';
 import BreakDownCard from '../components/common/BreakDownCard';
@@ -12,10 +11,6 @@ const Detail = () => {
   const detailItem = useRecoilValueLoadable(getDetailItemSelector(Number(id)));
   const detailItemData: DetailItem = detailItem.contents;
   const refresh = useRecoilRefresher_UNSTABLE(getDetailItemSelector(Number(id)));
-
-  useEffect(() => {
-    refresh();
-  }, []);
 
   const deleteDetailItem = async () => {
     await deleteItem(Number(id));
