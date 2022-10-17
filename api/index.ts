@@ -8,8 +8,13 @@ export const getList = async () => {
   return data;
 };
 
-export const addBasicFunds = async (price: number) => {
+export const addPrice = async (price: number) => {
   const data = await axios.post(`${baseURL}/basicFunds`, { basicFunds: price });
+  return data;
+};
+
+export const changePrice = async (price: number) => {
+  const data = await axios.patch(`${baseURL}/basicFunds`, { basicFunds: price });
   return data;
 };
 
@@ -21,4 +26,9 @@ export const addDetailItem = async (item: DetailItem) => {
 export const getDetailItem = async (id: number) => {
   const { data } = await axios.get(`${baseURL}/item/${id}`);
   return data;
+};
+
+export const deleteItem = async (id: number) => {
+  const deleteAPI = await axios.delete(`${baseURL}/item/delete/?id=${id}`);
+  return deleteAPI;
 };

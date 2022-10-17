@@ -2,7 +2,7 @@ import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
-import { addBasicFunds } from '../api';
+import { addPrice, changePrice } from '../api';
 import BreakDownCard from '../components/common/BreakDownCard';
 import { ItemList } from '../types/items';
 import { getAssetListSelector } from '../utils/recoils/asset';
@@ -49,13 +49,19 @@ const MainPage = () => {
     setBasicFunds(Number(value));
   };
 
+  // 기초 자금 추가
+  const addBasicFunds = async () => {
+    await addPrice(Number(basicFunds));
+    refresh();
+  };
+
   // 기초 자금 변경
   const changeBasicFunds = async () => {
     if (basicFunds === assetListValue.basicFunds) {
       return setMenuOpened(false);
     }
     if (basicFunds || basicFunds === 0) {
-      await addBasicFunds(Number(basicFunds));
+      await changePrice(Number(basicFunds));
       refresh();
     }
     return setMenuOpened(false);
@@ -86,7 +92,7 @@ const MainPage = () => {
             />
             <button
               className="w-full p-[10px] shadow-md rounded-md border hover:bg-primary hover:text-white"
-              onClick={changeBasicFunds}>
+              onClick={addBasicFunds}>
               입력
             </button>
           </div>
