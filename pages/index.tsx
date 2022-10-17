@@ -81,7 +81,7 @@ const MainPage = () => {
 
   return (
     <>
-      {!assetListValue.basicFunds ? (
+      {!assetListValue.basicFunds && !assetListValue.items ? (
         <div>
           <div className="p-[20px] border-b-4 border-double border-gray-400">
             <h3 className="font-bold text-md">기초 자금을 입력해 주세요</h3>
