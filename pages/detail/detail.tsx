@@ -1,22 +1,31 @@
-import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { deleteItem, getDetailItem } from '../../api';
+import { useEffect } from 'react';
+import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
+import { deleteItem } from '../../api';
 import BreakDownCard from '../../components/common/BreakDownCard';
 import { DetailItem } from '../../types/items';
+import { getDetailItemSelector } from '../../utils/recoils/asset';
 
-const Detail = ({ data }: { data: DetailItem }) => {
+const Detail = () => {
   const router = useRouter();
   const { id } = router.query;
-  const detailItemData = data;
+  const detailItem = useRecoilValueLoadable(getDetailItemSelector(Number(id)));
+  const detailItemData: DetailItem = detailItem.contents;
+  const refresh = useRecoilRefresher_UNSTABLE(getDetailItemSelector(Number(id)));
+
+  useEffect(() => {
+    refresh();
+  }, []);
 
   const deleteDetailItem = async () => {
     await deleteItem(Number(id));
+    refresh();
     return router.replace('/');
   };
 
   return (
     <>
-      {detailItemData && (
+      {detailItem.state === 'hasValue' && detailItemData && (
         <div>
           <div className="py-[15px] border-b w-full border-gray-400">
             <h2 className="text-xl font-semibold text-center">{detailItemData.title}</h2>
@@ -47,13 +56,4 @@ const Detail = ({ data }: { data: DetailItem }) => {
   );
 };
 
-export async function getStaticProps(context: GetStaticPropsContext) {
-  const { params } = context;
-  const id = params?.id;
-
-  const data = getDetailItem(Number(id));
-  return {
-    props: data,
-  };
-}
 export default Detail;

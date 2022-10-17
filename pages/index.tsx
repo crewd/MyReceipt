@@ -132,7 +132,7 @@ const MainPage = () => {
 
             {assetListValue.items &&
               assetListValue.items.map((consumption, index) => (
-                <Link href={`/detail/${index + 1}`} key={consumption.title}>
+                <Link href={`/detail?id=${index + 1}`} key={consumption.title}>
                   <a>
                     <BreakDownCard title={consumption.title} date={consumption.date} price={consumption.totalPrice} />
                   </a>
