@@ -15,7 +15,7 @@ const WritePage = () => {
   const { year, month, day } = date;
 
   const [contents, setContents] = useState<Item[]>([]);
-  const [content, setContent] = useState<Item>({ subTitle: '', price: 0, id: 0 });
+  const [content, setContent] = useState({ subTitle: '', price: '', id: 0 });
   const { subTitle, price } = content;
 
   const [income, setIncome] = useState(true);
@@ -73,14 +73,14 @@ const WritePage = () => {
       setContents([...contents, { subTitle: content.subTitle, price: -content.price, id: idCount }]);
     }
     if (income) {
-      setContents([...contents, { subTitle: content.subTitle, price: content.price, id: idCount }]);
+      setContents([...contents, { subTitle: content.subTitle, price: Number(content.price), id: idCount }]);
     }
     setIdCount(idCount + 1);
   };
 
   useEffect(() => {
     if (contents) {
-      setContent({ subTitle: '', price: 0, id: 0 });
+      setContent({ subTitle: '', price: '', id: 0 });
     }
   }, [contents]);
 
