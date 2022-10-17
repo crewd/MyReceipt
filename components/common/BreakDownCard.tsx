@@ -19,7 +19,7 @@ const BreakDownCard = ({
         {date && <div className="absolute bottom-[25px] left-0 text-xs text-gray-500">{date}</div>}
       </div>
       <span className={`${price > 0 ? 'text-green-500' : 'text-red-500'} text-center`}>
-        {price > 0 ? `+${price.toLocaleString()}` : price.toLocaleString()}
+        {price > 0 ? `+${price.toLocaleString()}` : price?.toLocaleString()}
       </span>
       {deleteContent && (
         <button className="text-right hover:text-red-500" onClick={deleteContent}>
