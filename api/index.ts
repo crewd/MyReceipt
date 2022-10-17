@@ -24,11 +24,11 @@ export const addDetailItem = async (item: DetailItem) => {
 };
 
 export const getDetailItem = async (id: number) => {
-  const { data } = await axios.get(`${baseURL}/item/${id}`);
+  const { data } = await axios.get(`${baseURL}/item/detail?id=${id}`);
   return data;
 };
 
 export const deleteItem = async (id: number) => {
-  const deleteAPI = await axios.delete(`${baseURL}/item/delete/?id=${id}`);
+  const deleteAPI = await axios.delete(`${baseURL}/item/delete?id=${id}`);
   return deleteAPI;
 };
