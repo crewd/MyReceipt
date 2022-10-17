@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
-import { deleteItem } from '../../api';
-import BreakDownCard from '../../components/common/BreakDownCard';
-import { DetailItem } from '../../types/items';
-import { getDetailItemSelector } from '../../utils/recoils/asset';
+import { deleteItem } from '../api';
+import BreakDownCard from '../components/common/BreakDownCard';
+import { DetailItem } from '../types/items';
+import { getDetailItemSelector } from '../utils/recoils/asset';
 
 const Detail = () => {
   const router = useRouter();
