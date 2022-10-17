@@ -1,27 +1,16 @@
-import { GetStaticPropsContext, NextPageContext } from 'next';
+import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
 import { deleteItem, getDetailItem } from '../../api';
 import BreakDownCard from '../../components/common/BreakDownCard';
 import { DetailItem } from '../../types/items';
-import { getDetailItemSelector } from '../../utils/recoils/asset';
 
 const Detail = ({ data }: { data: DetailItem }) => {
   const router = useRouter();
   const { id } = router.query;
-  // const detailItem = useRecoilValueLoadable(getDetailItemSelector(Number(id)));
-  // const detailItemData: DetailItem = detailItem.contents;
   const detailItemData = data;
-  const refresh = useRecoilRefresher_UNSTABLE(getDetailItemSelector(Number(id)));
-
-  useEffect(() => {
-    refresh();
-  }, []);
 
   const deleteDetailItem = async () => {
     await deleteItem(Number(id));
-    refresh();
     return router.replace('/');
   };
 
