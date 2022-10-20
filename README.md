@@ -8,7 +8,7 @@
 
 기초 자금 입력, 수정 / 내역 추가, 삭제 등의 기능이 있습니다.
 
-**❗ next.js의 api routes 기능을 사용하여 api를 만들었습니다. 데이터 저장은 되지 않습니다.**
+**❗ next.js의 api routes 기능을 사용하여 DB 없이 api를 만들었습니다. 데이터 저장은 되지 않습니다.**
 
 ## 🔗 [preview](https://receipt-beta.vercel.app/)
 
