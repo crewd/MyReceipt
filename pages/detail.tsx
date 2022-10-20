@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
 import { deleteItem } from '../api';
@@ -24,6 +25,10 @@ const Detail = () => {
     <>
       {detailItem.state === 'hasValue' && detailItemData && (
         <div>
+          <Head>
+            <title> {detailItemData.title} 상세 내역 | MyReceipt</title>
+            <meta name="description" content={`${detailItemData.title} 상세 내역`} />
+          </Head>
           <div className="py-[15px] border-b w-full border-gray-400">
             <h2 className="text-xl font-semibold text-center">{detailItemData.title}</h2>
           </div>

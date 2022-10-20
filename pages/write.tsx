@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -107,6 +108,10 @@ const WritePage = () => {
 
   return (
     <div className="pb-[20px]">
+      <Head>
+        <title>내역 추가 | MyReceipt</title>
+        <meta name="description" content="나만의 영수증 내역을 추가해 보세요!" />
+      </Head>
       <div className="p-[20px] w-full sm:flex sm:justify-between">
         <h3 className="text-md pb-[10px]">날짜 선택</h3>
         <div className="flex">

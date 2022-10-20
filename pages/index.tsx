@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable } from 'recoil';
@@ -78,6 +79,10 @@ const MainPage = () => {
 
   return (
     <>
+      <Head>
+        <title>나만의 영수증 | MyReceipt</title>
+        <meta name="description" content="나만의 영수증을 통해 가계부를 관리해 보세요!" />
+      </Head>
       {assetList.state === 'loading' ? (
         <div className="w-5 h-5 animate-spin"></div>
       ) : assetList.state === 'hasValue' && !assetListValue.basicFunds ? (
